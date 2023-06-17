@@ -5,14 +5,16 @@
 # highlighting an area to copy. scrotcucks on suicidewatch right now.
 
 # variables
-output="$(date '+%y%m%d-%H%M-%S').png"
+dir="$HOME/pic/"
+output="$(date '+%y%m%d-%H%M-%S')"
+format=".png"
 xclip_cmd="xclip -sel clip -t image/png"
 
 case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | dmenu -l 6 -i -p "Screenshot which area?")" in
-    "a selected area") maim -u -s pic-selected-"${output}" ;;
-    "current window") maim -q -d 0.2 -i "$(xdotool getactivewindow)" pic-window-"${output}" ;;
-    "full screen") maim -q -d 0.2 pic-full-"${output}" ;;
-    "a selected area (copy)") maim -u -s | ${xclip_cmd} ;;
+    "a selected area") maim -s "$dir""${output}"-pic-selected"$format" ;;
+    "current window") maim -q -d 0.2 -i "$(xdotool getactivewindow)" "$dir""${output}"-pic-window"$format" ;;
+    "full screen") maim -q -d 0.2 "$dir""${output}"-pic-full"$format" ;;
+    "a selected area (copy)") maim -s | ${xclip_cmd} ;;
     "current window (copy)") maim -q -d 0.2 -i "$(xdotool getactivewindow)" | ${xclip_cmd} ;;
     "full screen (copy)") maim -q -d 0.2 | ${xclip_cmd} ;;
 esac
